@@ -1,0 +1,95 @@
+  *{
+    font-family: "Open Sans",Sans-Serif;
+    overflow: hidden;
+  }
+  
+  body {
+    background: rgba(0,0,0,.5);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    font-size: 115%;
+    color: #fff;
+    background-image: url('https://source.unsplash.com/1600x900/?landscape');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-weight: 300;
+  }
+  
+  .card {
+    background: rgba(0,0,0,.85);
+    padding: 1.5em;
+    border-radius: 1em;
+    width: 90%;
+    margin: 1em;
+  }
+  
+  button {
+    border: none;
+    outline: none;
+    height: 3em;
+    width: 3em;
+    margin: .5em;
+    padding: .5em;
+    background:rgba(124,124,124,0.2);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: 0.5s ease-in-out;
+  }
+  
+  button:hover {
+    background: rgba(124,124,124,0.25);
+  }
+  
+  input[type="text"] {
+    outline: none;
+    border: none;
+    padding: .32em;
+    background: rgba(124,124,124,0.2);
+    width: 100%;
+    color: #fff;
+    font-size: 110%;
+    border-radius: 10px;
+    text-transform: capitalize;
+  }
+  
+  .description {
+    text-transform: capitalize;
+  }
+  
+  h1.temp {
+    margin: 0;
+    margin-bottom: 0.4em;
+    font-weight: 500;
+  }
+  h2{
+    font-weight: 400;
+  }
+  
+  .loading {
+    visibility: hidden;
+    height: 50px;
+    position: relative;
+  }
+  
+  .loading::after {
+    content: "Loading...";
+    position: absolute;
+    visibility: visible;
+    top: 10px;
+    left: 10px;
+    font-size: 115%;
+  }
+  
+  /* Utilities */
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .flex2 {
+    display: flex;
+    align-items: center;
+  }

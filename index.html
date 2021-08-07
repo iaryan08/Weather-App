@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="https://i.ibb.co/cCMxCSV/Weather-Icon.png" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="https://i.ibb.co/cCMxCSV/Weather-Icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans@wght:300&display=swap" rel="stylesheet">
+  <style type="text/css" media="all">
+    *{
+    font-family: "Open Sans",Sans-Serif;
+    overflow: hidden;
+  }
+  
+  body {
+    background: rgba(0,0,0,.5);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    font-size: 115%;
+    color: #fff;
+    background-image: url('https://source.unsplash.com/1600x900/?landscape');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-weight: 300;
+  }
+  
+  .card {
+    background: rgba(0,0,0,.85);
+    padding: 1.5em;
+    border-radius: 1em;
+    width: 90%;
+    margin: 1em;
+  }
+  
+  button {
+    border: none;
+    outline: none;
+    height: 3em;
+    width: 3em;
+    margin: .5em;
+    padding: .5em;
+    background:rgba(124,124,124,0.2);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: 0.5s ease-in-out;
+  }
+  
+  button:hover {
+    background: rgba(124,124,124,0.25);
+  }
+  
+  input[type="text"] {
+    outline: none;
+    border: none;
+    padding: .32em;
+    background: rgba(124,124,124,0.2);
+    width: 100%;
+    color: #fff;
+    font-size: 110%;
+    border-radius: 10px;
+    text-transform: capitalize;
+  }
+  
+  .description {
+    text-transform: capitalize;
+  }
+  
+  h1.temp {
+    margin: 0;
+    margin-bottom: 0.4em;
+    font-weight: 500;
+  }
+  h2{
+    font-weight: 400;
+  }
+  
+  .loading {
+    visibility: hidden;
+    height: 50px;
+    position: relative;
+  }
+  
+  .loading::after {
+    content: "Loading...";
+    position: absolute;
+    visibility: visible;
+    top: 10px;
+    left: 10px;
+    font-size: 115%;
+  }
+  
+  /* Utilities */
+  .flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .flex2 {
+    display: flex;
+    align-items: center;
+  }
+  </style>
+  <link rel="stylesheet" href="css/index.css">
+  <title>Weather App</title>
+</head>
+<body class="flex">
+  <div class="card">
+
+    <!--Search Bar-->
+    <div class="search flex">
+      <input type="text" name="inputCity" id="inputCity" placeholder="Enter City Name "/>
+      <!--<input type="text" name="search-bar" class="city search-bar" placeholder="Search..."/>-->
+      <button type="submit" class="flex btn"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" style="fill:rgba(255, 255, 255, 1);transform:;-ms-filter:"><path d="M10,18c1.846,0,3.543-0.635,4.897-1.688l4.396,4.396l1.414-1.414l-4.396-4.396C17.365,13.543,18,11.846,18,10 c0-4.411-3.589-8-8-8s-8,3.589-8,8S5.589,18,10,18z M10,4c3.309,0,6,2.691,6,6s-2.691,6-6,6s-6-2.691-6-6S6.691,4,10,4z"></path></svg></button>
+
+    </div>
+
+    <div class="weather loading">
+
+      <h2 class="city">Weather in :  </h2>
+
+      <div>
+        <h1 class="temp">51°C</h1>
+      </div>
+
+      <div class="flex2">
+        <img src="" class="icon" alt="" />
+        <div class="description">
+          
+        </div>
+      </div>
+
+      <div class="humidity">
+
+      </div>
+
+      <div class="wind">
+
+      </div>
+    </div>
+
+  </div>
+  <script type="text/javascript" charset="utf-8">
+    //fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityData}&appid=6b7b8004c73c74adea5f879cdbc96648`)
+  
+  let city = document.querySelector('#inputCity');
+  
+  let weather = {
+    apikey: "6b7b8004c73c74adea5f879cdbc96648",
+    cityData: city.value,
+    fetchWeather: (cityData)=> {
+      fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityData}&units=metric&appid=${weather.apikey}`).then(response => response.json())
+      .then(data => {
+        let {
+          name
+        } = data;
+        let {
+          icon, description
+        } = data.weather[0];
+        let {
+          temp, humidity
+        } = data.main;
+        let {
+          speed
+        } = data.wind;
+        
+        setBg(description);
+  
+        let iconurl = `http://openweathermap.org/img/w/${icon}.png`;
+        document.querySelector(".icon").src = iconurl;
+        document.querySelector(".weather").classList.remove("loading");
+  
+        document.querySelector(".city").innerHTML = "Weather in "+name;
+        document.querySelector(".temp").innerHTML = temp+" &deg;C";
+        document.querySelector(".description").innerHTML = description;
+        document.querySelector(".humidity").innerHTML = "Humidity : "+ humidity + "%";
+        document.querySelector(".wind").innerHTML = "Wind : "+speed+" m/s";
+  
+  
+      }).catch(err=>{alert("Please Enter Any Other City Name");alert(err)});
+    },
+  
+  };
+  document.querySelector(".btn").onclick = ()=> {
+    cityData = city.value;
+    weather.fetchWeather(cityData);
+  };
+  
+  function setBg(bg) {
+    document.querySelector("body").style.backgroundImage = `url("https://source.unsplash.com/1600x900/?${bg},${cityData}")`;
+  }
+  </script>
+
+  <script src="js/index.js"></script>
+</body>
+</html>

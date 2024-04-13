@@ -42,6 +42,15 @@
     cityData = city.value;
     weather.fetchWeather(cityData);
   };
+
+  document.getElementById("inputCity")
+    .addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        cityData = city.value;
+        weather.fetchWeather(cityData);
+    }
+});
   
   function setBg(bg) {
     document.querySelector("body").style.backgroundImage = `url("https://source.unsplash.com/1600x900/?${bg},${cityData}")`;
